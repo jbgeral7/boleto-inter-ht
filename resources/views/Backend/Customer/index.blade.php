@@ -39,6 +39,7 @@
                             <th>CPF/CNPJ</th>
                             <th>Status</th>
                             <td>Editar</td>
+                            <td>Serviços</td>
                             <td>Boleto</td>
                         </tr>
                     </thead>
@@ -51,6 +52,7 @@
                                 <td>{{$record->cpf_cnpj}}</td>
                                 <td>{{$record->status == 1 ? 'Ativo' : 'Desativado'}}</td>
                                 <td><a class="btn btn-warning" href="{{route('backend.customer.edit', ['id' => $record->id])}}">Editar</a></td>
+                                <td width="130"><a href="{{route('backend.boleto.index', ['cliente' => 'cliente', 'customer_id' => $record->id])}}" class="btn btn-info">Ver serviços</a></td>
                                 <td width="140"><a href="{{route('backend.boleto.index', ['cliente' => 'cliente', 'customer_id' => $record->id])}}" class="btn btn-success">Ver boletos</a></td>
                             </tr>
                         @endforeach
