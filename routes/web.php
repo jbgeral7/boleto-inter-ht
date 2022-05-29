@@ -25,7 +25,7 @@ Route::get('/', function () {
 
 
 Route::group(['middleware' => ['web']], function(){
-    Route::group(['prefix' => 'painel', 'namespace' => 'App\Http\Controllers\Backend', 'middleware' => 'web', 'as' => 'backend.'], function()
+    Route::group(['prefix' => 'painel', 'namespace' => 'App\Http\Controllers\Backend', 'middleware' => 'auth', 'as' => 'backend.'], function()
 	{
         Route::group(['prefix' => 'cliente', 'as' => 'customer.'], function(){
             Route::get('listar', [CustomerController::class, 'index'])->name('index');
