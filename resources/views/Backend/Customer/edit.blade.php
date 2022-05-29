@@ -155,8 +155,8 @@
                 <div class="form-group col">
                     <label for="status">Status do cliente no sistema</label>
                     <select name="status" id="status" class="form-control">
-                        <option value="1">ATIVO</option>
-                        <option value="0">INATIVO</option>
+                        <option value="1" {{$customer->status == 1 ? 'selected' : ''}}>ATIVO</option>
+                        <option value="0" {{$customer->status == 0 ? 'selected' : ''}}>INATIVO</option>
                       </select>
                       <small>Status Inativo não gera boleto</small>
                   </div>

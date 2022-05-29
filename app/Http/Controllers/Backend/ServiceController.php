@@ -68,7 +68,7 @@ class ServiceController extends Controller
     public function edit($id)
     {
         $service = $this->service->find($id);
-        return view('Backend.service.edit', compact('service'));
+        return view('Backend.Service.edit', compact('service'));
     }
 
     /**
@@ -81,7 +81,7 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         $this->service->update($request->all(), $id);
-        return redirect()->route('backend.service.index')
+        return redirect()->route('Backend.Service.index')
             ->with(['message' => 'Serviço atualizado com sucesso!', 'alert-type' => 'success']);
     }
 

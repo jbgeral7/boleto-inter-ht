@@ -23,7 +23,7 @@
             <h3 class="card-title">Atualizar {{$service->name}}</h3>
           </div>
           <form method="post" action="{{route('backend.service.update', ['id' => $service->id])}}">
-           @method('put');
+           @method('put')
            @csrf
             <div class="card-body">
               <div class="form-row">
