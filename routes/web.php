@@ -60,7 +60,4 @@ Route::group(['middleware' => ['web']], function(){
 
 Auth::routes(['register' => false, 'reset' => false]);
 
-
-Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
