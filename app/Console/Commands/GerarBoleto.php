@@ -92,7 +92,7 @@ class GerarBoleto extends Command
     }
 
     public function generateMyNumber($customer){
-       $generate = $customer->fantasy_name ? substr($customer->fantasy_name, 0, 3) . "-". date('d-m-s') : substr($customer->name, 0, 3) . "-" . date('d-m-s');
+       $generate = $customer->fantasy_name ? substr($customer->fantasy_name, 0, 3) . "-". mt_rand("1000", "99999999") : substr($customer->name, 0, 3) . "-" . mt_rand("1000", "99999999");
        return preg_replace('/\s+/', '', $generate);
     }
 
