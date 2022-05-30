@@ -31,9 +31,6 @@ class BoletoRepository extends AbstractRepository implements BoletoInterface
         }
 
         $data['customer_id'] = (int) $data['customer_id'];
-        $data['email_notify'] = "NAO";
-        $data['whatsapp_notify'] = "NAO";
-        $data['telegram_notify'] = "NAO";
 
         $customer = $this->findCustomer($data['customer_id']);
 

@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
 
 class InterService
 {
@@ -74,7 +76,6 @@ class InterService
 
         // return $this->cancel('00812272294');
 
-
         $data = [
             "valorAbatimento" => 0,
                 "pagador" => [
@@ -122,6 +123,10 @@ class InterService
             $this->certKey(), 
             false);
 
+        $prefixLog = "Inter Service gerar boleto -";
+
+        $this->logs("{$prefixLog} Log boleto cliente {$customer->name} {$response->getBody()} \n\n");
+            
         return $response;
     }
 
@@ -169,6 +174,13 @@ class InterService
             false);
 
         echo $response->getBody();
+    }
+
+    public function logs($message){
+        Log::build([
+            'driver' => 'daily',
+            'path' => storage_path('logs/gerar-boleto/boleto.log'),
+        ])->info($message);
     }
 
 }

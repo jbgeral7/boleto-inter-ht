@@ -60,27 +60,26 @@ class GerarBoleto extends Command
 
             $this->logs("{$prefixLog} Total dos serviços de {$customer->name} R$ {$total_price}");
 
-            // $data =  $this->generateData($customer, $total_price);
-            
+            $data =  $this->generateData($customer, $total_price);
 
-            // $this->logs("{$prefixLog} meu número {$data['my_number']} vencimento dia {$data['due_date']}");
+            $this->logs("{$prefixLog} meu número {$data['my_number']} vencimento dia {$data['due_date']}");
             
-            // $response = $this->boleto->store($data);
+            $response = $this->boleto->store($data);
 
-        //    if(!isset($response->original->id)){
-        //        $this->logs("{$prefixLog} Falha ao gerar boleto para {$customer->name}");
-        //        $this->boleto->failedSendBoleto(['erro' => "Erro ao gerar boleto"]);
-        //        continue;
-        //     }
+           if(!isset($response->original->id)){
+               $this->logs("{$prefixLog} Falha ao gerar boleto para {$customer->name}");
+               $this->boleto->failedSendBoleto(['erro' => "Erro ao gerar boleto"]);
+               continue;
+            }
         
-        //     $boletos[] = $response->original->id;
+            $boletos[] = $response->original->id;
 
             $this->logs("{$prefixLog} terminado customer {$customer->name} pegando o próximo \n\n");
             
         }
 
         $this->logs("{$prefixLog} finalizado a geração de boletos, chamando a tarefa de Download");
-        $this->call("ln:downloadBoleto", ["boletos_id" => [0 => 7, 1 => 8, 2 => 666]]);
+        $this->call("ln:downloadBoleto", ["boletos_id" => $boletos]);
     }
 
     public function generateData($customer, $total_price){
@@ -93,7 +92,8 @@ class GerarBoleto extends Command
     }
 
     public function generateMyNumber($customer){
-       return $customer->fantasy_name ? str_replace(" ", "-", $customer->fantasy_name) . "-". date('H-s-m') : explode(" ", $customer->name)[0] . "-" . date('H-s-m');
+       $generate = $customer->fantasy_name ? substr($customer->fantasy_name, 0, 3) . "-". date('d-m-s') : substr($customer->name, 0, 3) . "-" . date('d-m-s');
+       return preg_replace('/\s+/', '', $generate);
     }
 
     public function logs($message){
