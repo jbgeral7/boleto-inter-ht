@@ -132,7 +132,7 @@ class BoletoRepository extends AbstractRepository implements BoletoInterface
             return response("Boleto não enviado, o arquivo não existe", 404);
         }
 
-        $data["month"] = $this->translateMonth(date("M"));
+        $data["month"] = $this->translateMonth(date("F"));
         $data["email"] = $find->customer->email;
         $data["title"] = "Sua fatura de " . $data["month"] . " chegou";
         $data["customer"] = $find->customer;
@@ -142,7 +142,7 @@ class BoletoRepository extends AbstractRepository implements BoletoInterface
         $file = $exists->original['url_download'];
   
         Mail::send('Emails.boleto', $data, function($message)use($data, $file) {
-            $message->to($data["email"], $data["email"])
+            $message->to($data["email"], $data["email"])->bcc(env('NOTIFY_SEND_BOLETO'))
                 ->subject($data["title"]);
  
             $message->attach($file);
@@ -201,19 +201,19 @@ class BoletoRepository extends AbstractRepository implements BoletoInterface
     }
 
     public function translateMonth($month){
-        switch($month){
-            case "January": $month = "Janeiro"; break;
-            case "February": $month = "Fevereiro"; break;
-            case "March": $month = "Março"; break;
-            case "April": $month = "Abril"; break;
-            case "May": $month = "Maio"; break;
-            case "June": $month = "Junho"; break;
-            case "July": $month = "Julho"; break;
-            case "August": $month = "Agosto"; break;
-            case "September": $month = "Setembro"; break;
-            case "October": $month = "Outubro"; break;
-            case "November": $month = "Novembro"; break;
-            case "December": $month = "Dezembro"; break;
+        switch(strtolower($month)){
+            case "january": $month = "Janeiro"; break;
+            case "february": $month = "Fevereiro"; break;
+            case "march": $month = "Março"; break;
+            case "april": $month = "Abril"; break;
+            case "may": $month = "Maio"; break;
+            case "june": $month = "Junho"; break;
+            case "july": $month = "Julho"; break;
+            case "august": $month = "Agosto"; break;
+            case "september": $month = "Setembro"; break;
+            case "october": $month = "Outubro"; break;
+            case "november": $month = "Novembro"; break;
+            case "december": $month = "Dezembro"; break;
             default: $month = "Unknown"; break;
         }
 
