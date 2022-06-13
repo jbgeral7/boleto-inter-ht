@@ -129,6 +129,8 @@ class BoletoController extends Controller
         
         $response = $response->original;
 
-        return response()->download($response['url_download'], $response['name_boleto'] . ".pdf");
+        $nameBoleto = preg_replace('/[^a-z0-9]/i', '_', $response['name_boleto']);
+
+        return response()->download($response['url_download'], $nameBoleto . ".pdf");
      }
 }
