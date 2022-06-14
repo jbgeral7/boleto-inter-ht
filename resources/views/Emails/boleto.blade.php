@@ -201,10 +201,10 @@
                                             <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:22px;text-align:left;color:#525252;">
                                                 <p><strong>Olá, {{$customer->name}} - {{$customer->fantasy_name ?: $customer->fantasy_name}}</strong></p>
 
-                                                <p>A sua fatura referente ao mês de {{$month}} com vencimento no dia {{$customer->expiration_day_boleto}} de {{$month}} de {{date("Y")}} está em anexo e disponível para pagamento.</p>
+                                                <p>A sua fatura referente ao mês de {{$month}}  <strong>com vencimento no dia {{$due_date}} de {{$month}} de {{date("Y")}} </strong> está em anexo e disponível para pagamento.</p>
                                                 <p>Antes de realizar o pagamento, confira os valores e serviços descritos abaixo e no boleto.</p>
-                                                <p>Lembramos que caso não seja quitado até o dia 
-                                                {{$customer->expiration_day_boleto}} deste mês, será necessário solicitar a segunda via, que poderá ter custos adicionais.</p>
+                                                <p>Lembramos que caso não seja quitado até o dia
+                                                <strong>{{$due_date}} de {{$month}} de {{date("Y")}}, será necessário solicitar a segunda via, que poderá ter custos adicionais. </strong></p>
                                             </div>
                                         </td>
                                     </tr>

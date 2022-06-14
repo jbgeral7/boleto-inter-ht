@@ -194,16 +194,15 @@
 
                                         </td>
                                     </tr>
-
                                     <tr>
                                         <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
 
                                             <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:22px;text-align:left;color:#525252;">
                                                 <p><strong>Olá, {{$customer->name}} - {{$customer->fantasy_name ?: $customer->fantasy_name}}</strong></p>
 
-                                                <p>O seu boleto com vencimento no dia <strong>{{$customer->expiration_day_boleto}} de {{$month}} de {{date("Y")}}</strong> está em anexo e disponível para pagamento.</p>
+                                                <p>O seu boleto com <strong>vencimento no dia {{$due_date}} de {{$month}} de {{date("Y")}}</strong> está em anexo e disponível para pagamento.</p>
                                                 <p>Lembramos que caso não seja quitado até o dia 
-                                                {{$customer->expiration_day_boleto}} deste mês, será necessário solicitar a segunda via, que poderá ter custos adicionais.</p>
+                                                <strong>{{$due_date}} de {{$month}} de {{date("Y")}}, será necessário solicitar a segunda via, que poderá ter custos adicionais. </strong></p>
                                             </div>
                                         </td>
                                     </tr>

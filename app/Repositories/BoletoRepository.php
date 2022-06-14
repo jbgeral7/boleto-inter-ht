@@ -133,6 +133,7 @@ class BoletoRepository extends AbstractRepository implements BoletoInterface
         }
 
         $data["month"] = $this->translateMonth(date("F"));
+        $data['due_date'] = explode("-", $find->due_date)[2];
         $data["email"] = $find->customer->email;
         $data["title"] = "Sua fatura de " . $data["month"] . " chegou";
         $data["customer"] = $find->customer;
@@ -166,9 +167,11 @@ class BoletoRepository extends AbstractRepository implements BoletoInterface
             return response("Boleto não enviado, o arquivo não existe", 404);
         }
 
-        $data["month"] = $this->translateMonth(date("F"));
+        $date = explode("-", $find->due_date);
+        $data['due_date'] = explode("-", $find->due_date)[2];
+        $data["month"] = $this->convertNumberDateToString($date[1]);
         $data["email"] = $find->customer->email;
-        $data["title"] = "Seu boleto está disponível";
+        $data["title"] = "Seu boleto de {$data['month']} está disponível";
         $data["customer"] = $find->customer;
         $data["boleto"] = $find;
 
@@ -233,6 +236,26 @@ class BoletoRepository extends AbstractRepository implements BoletoInterface
          return response("ok", 200);
     }
 
+    public function convertNumberDateToString($month){
+        switch(strtolower($month)){
+            case "01": $month = "Janeiro"; break;
+            case "02": $month = "Fevereiro"; break;
+            case "03": $month = "Março"; break;
+            case "04": $month = "Abril"; break;
+            case "05": $month = "Maio"; break;
+            case "06": $month = "Junho"; break;
+            case "07": $month = "Julho"; break;
+            case "08": $month = "Agosto"; break;
+            case "09": $month = "Setembro"; break;
+            case "10": $month = "Outubro"; break;
+            case "11": $month = "Novembro"; break;
+            case "12": $month = "Dezembro"; break;
+            default: $month = "Unknown"; break;
+        }
+
+        return $month;
+    }
+    
     public function translateMonth($month){
         switch(strtolower($month)){
             case "january": $month = "Janeiro"; break;
