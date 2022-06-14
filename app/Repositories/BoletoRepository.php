@@ -151,6 +151,39 @@ class BoletoRepository extends AbstractRepository implements BoletoInterface
         return response("boleto enviado com sucesso", 200);
     }
 
+    public function sendAvulseBoleto($id){
+        $find = Boleto::where('id', $id)->with('customer')->firstOrFail();
+        
+        $permission = $this->verifyPermissionSendBoleto($find, 'email_notify');
+
+        if(!$permission){
+            return response("O cliente está configurado para não receber boletos por e-mail, verifique o cadastro do cliente", 401);
+        }
+
+        $exists = $this->findPath($permission);
+
+        if(!$exists){
+            return response("Boleto não enviado, o arquivo não existe", 404);
+        }
+
+        $data["month"] = $this->translateMonth(date("F"));
+        $data["email"] = $find->customer->email;
+        $data["title"] = "Seu boleto está disponível";
+        $data["customer"] = $find->customer;
+        $data["boleto"] = $find;
+
+        $file = $exists->original['url_download'];
+  
+        Mail::send('Emails.boleto-avulso', $data, function($message)use($data, $file) {
+            $message->to($data["email"], $data["email"])->bcc(env('NOTIFY_SEND_BOLETO'))
+                ->subject($data["title"]);
+ 
+            $message->attach($file);
+        });
+
+        return response("boleto enviado com sucesso", 200);
+    }
+
     public function sendWhatsApp($boleto_id){
         $find = Boleto::where('id', $boleto_id)->with('customer')->firstOrFail();
         

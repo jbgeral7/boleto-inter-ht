@@ -189,7 +189,7 @@
                                         <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
 
                                             <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:24px;font-weight:bold;line-height:22px;text-align:center;color:#525252;">
-                                                Sua fatura de {{$month}} chegou!
+                                                Seu boleto chegou!
                                             </div>
 
                                         </td>
@@ -201,39 +201,12 @@
                                             <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:22px;text-align:left;color:#525252;">
                                                 <p><strong>Olá, {{$customer->name}} - {{$customer->fantasy_name ?: $customer->fantasy_name}}</strong></p>
 
-                                                <p>A sua fatura referente ao mês de {{$month}} com vencimento no dia {{$customer->expiration_day_boleto}} de {{$month}} de {{date("Y")}} está em anexo e disponível para pagamento.</p>
-                                                <p>Antes de realizar o pagamento, confira os valores e serviços descritos abaixo e no boleto.</p>
+                                                <p>O seu boleto com vencimento no dia <strong>{{$customer->expiration_day_boleto}} de {{$month}} de {{date("Y")}}</strong> está em anexo e disponível para pagamento.</p>
                                                 <p>Lembramos que caso não seja quitado até o dia 
                                                 {{$customer->expiration_day_boleto}} deste mês, será necessário solicitar a segunda via, que poderá ter custos adicionais.</p>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-
-                                            <table 0="[object Object]" 1="[object Object]" 2="[object Object]" border="0" style="cellspacing:0;color:#000;font-family:'Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;">
-                                                <tr style="border-bottom:1px solid #ecedee;text-align:left;">
-                                                    <th style="padding: 0 15px 10px 0;">Serviço</th>
-                                                    <td style="padding: 0 15px;"></td>
-                                                    <th style="padding: 0 0 0 15px; text-align: right" align="right">Valor</th>
-                                                </tr>
-                                                @foreach($services as $service)
-                                                    <tr>
-                                                        <td style="padding: 5px 15px 5px 0;">{{$service->name}}</td>
-                                                        <td style="padding: 0 15px;"></td>
-                                                        <td style="padding: 0 0 0 15px;" align="right">{{'R$ '. number_format($service->price, 2, ',', '.') }}</td>
-                                                    </tr>
-                                                @endforeach
-                                                <tr style="border-bottom:2px solid #ecedee;text-align:left;padding:15px 0;">
-                                                    <td style="padding: 5px 15px 5px 0; font-weight:bold">TOTAL</td>
-                                                    <td style="padding: 0 15px;"></td>
-                                                    <td style="padding: 0 0 0 15px; font-weight:bold" align="right">{{'R$ '. number_format($boleto->price, 2, ',', '.') }}</td>
-                                                </tr>
-                                            </table>
-
-                                        </td>
-                                    </tr>
-
                                     <tr>
                                         <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                             <div style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:22px;text-align:left;color:#525252;">
@@ -251,8 +224,6 @@
                                             </td>
                                         </tr>
                                     @endif
-
-                                   
                                    
                                     <tr>
                                         <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">

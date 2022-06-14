@@ -82,6 +82,15 @@ class BoletoController extends Controller
         
     }
 
+    public function sendAvulseEmail($id){
+        $this->boleto->sendAvulseBoleto($id);
+
+        $this->boleto->update(["email_notify_send" => date("Y-m-d H:i:s")], $id);
+
+        return redirect()->route('backend.boleto.index')
+            ->with(['message' => 'Boleto enviado com sucesso!', 'alert-type' => 'success']);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
