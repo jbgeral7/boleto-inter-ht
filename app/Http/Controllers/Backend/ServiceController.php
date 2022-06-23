@@ -81,7 +81,7 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         $this->service->update($request->all(), $id);
-        return redirect()->route('Backend.Service.index')
+        return redirect()->route('backend.service.index')
             ->with(['message' => 'Serviço atualizado com sucesso!', 'alert-type' => 'success']);
     }
 

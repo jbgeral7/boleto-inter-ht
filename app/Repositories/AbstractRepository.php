@@ -20,20 +20,20 @@ abstract class AbstractRepository
     }
 
     public function get($active = false){
-        $tableCache = $this->model->getTable();
-        
         if($active){
-            $records = Cache::remember($tableCache . '_get_active', $this->time_cache, function() {
-                return $this->model::where('status', '1')->orderBy('id', 'desc')->get();
-            });
+            if(!Cache::tags($this->tableCache)->has('_get_active')){
+                $records = $this->model::where('status', '1')->orderBy('id', 'desc')->get();
+                Cache::tags([$this->tableCache])->put('_get_active', $records, $this->time_cache);
+            }
+            return Cache::tags([$this->tableCache])->get('_get_active');
         }else {
-            $records = Cache::remember($tableCache . 'get', $this->time_cache, function() {
-                return $this->model::orderBy('id', 'desc')->get();
-            });
+            if(!Cache::tags($this->tableCache)->has('_get')){
+                $records = $this->model::orderBy('id', 'desc')->get();
+                Cache::tags([$this->tableCache])->put('_get', $records, $this->time_cache);
+            }
+            return Cache::tags([$this->tableCache])->get('_get');
         }
         
-
-        return $records;
     }
 
     public function store($data){
@@ -47,13 +47,11 @@ abstract class AbstractRepository
 
     public function first()
     {
-        $tableCache = $this->model->getTable();
-            // Checa se existe cache, se existir retorna em cache, do contrário cria e armazena por 1 dia
-        $records = Cache::remember($tableCache, $this->time_cache, function() {
-            return $this->model::first();
-        });
-
-        return $records;
+        if(!Cache::tags($this->tableCache)->has('_first')){
+            $records = $this->model::first();
+            Cache::tags([$this->tableCache])->put('_first', $records, $this->time_cache);
+        }
+        return Cache::tags([$this->tableCache])->get('_first');
     }
     
     public function find($id)
