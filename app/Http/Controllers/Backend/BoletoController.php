@@ -142,11 +142,16 @@ class BoletoController extends Controller
          return redirect()->back()
          ->with(['message' => $mesesage, 'alert-type' => 'error']);
         }
-        
-        $response = $response->original;
 
-        $nameBoleto = preg_replace('/[^a-z0-9]/i', '_', $response['name_boleto']);
+        $response = json_decode($response->getContent());
 
-        return response()->download($response['url_download'], $nameBoleto . ".pdf");
+        if(isset($response->url_download->headers)){
+            $urlDownload = $response->url_download->original->url_download;
+        }else {
+           $urlDownload = $response->url_download;
+        }
+
+        $nameBoleto = preg_replace('/[^a-z0-9]/i', '_', $response->name_boleto);
+        return response()->download($urlDownload, $nameBoleto . ".pdf");
      }
 }
