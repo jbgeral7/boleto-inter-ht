@@ -30,6 +30,7 @@ Route::group(['middleware' => ['web']], function(){
 	{
         Route::get('/', [HomeController::class, 'index'])->name('index');
         Route::get('/get-saldo',  [HomeController::class, 'getSaldo'])->name('get-saldo');
+        Route::get('/limpar-cache', [HomeController::class, 'cacheClear'])->name('cache-clear');
         Route::group(['prefix' => 'cliente', 'as' => 'customer.'], function(){
             Route::get('listar', [CustomerController::class, 'index'])->name('index');
             Route::get('adicionar', [CustomerController::class, 'create'])->name('create');

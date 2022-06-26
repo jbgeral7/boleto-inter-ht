@@ -251,6 +251,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('backend.cache-clear')}}" class="nav-link" onclick="return confirm('Tem certeza que deseja limpar o cache de todo o sistema?')">
+              <i class="nav-icon fas fa-eraser"></i>
+              <p>
+                Limpar cache
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

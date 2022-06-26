@@ -43,6 +43,13 @@ class HomeController extends Controller
 
     protected function getSaldo(){
         $decode = $this->inter->getSaldo();
-       return json_decode($decode);
+        return json_decode($decode);
+    }
+
+    public function cacheClear(){
+        \Artisan::call('cache:clear');
+
+        return redirect()->back()
+            ->with(['message' => 'Cache limpo com sucesso', 'alert-type' => 'success']);
     }
 }
