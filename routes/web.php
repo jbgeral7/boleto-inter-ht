@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\BoletoController;
+use App\Http\Controllers\Backend\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,8 @@ Route::get('/', function () {
 Route::group(['middleware' => ['web']], function(){
     Route::group(['prefix' => 'painel', 'namespace' => 'App\Http\Controllers\Backend', 'middleware' => 'auth', 'as' => 'backend.'], function()
 	{
+        Route::get('/', [HomeController::class, 'index'])->name('index');
+        Route::get('/get-saldo',  [HomeController::class, 'getSaldo'])->name('get-saldo');
         Route::group(['prefix' => 'cliente', 'as' => 'customer.'], function(){
             Route::get('listar', [CustomerController::class, 'index'])->name('index');
             Route::get('adicionar', [CustomerController::class, 'create'])->name('create');
@@ -61,4 +64,4 @@ Route::group(['middleware' => ['web']], function(){
 
 Auth::routes(['register' => false, 'reset' => false]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

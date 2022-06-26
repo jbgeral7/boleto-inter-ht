@@ -34,6 +34,9 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{route('backend.index')}}" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
         <a href="{{route('backend.customer.create')}}" class="nav-link">Adicionar Cliente</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
@@ -209,7 +212,7 @@
                with font-awesome or any other icon font library -->
           
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{route('backend.index')}}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Minha conta
@@ -306,7 +309,7 @@
 <script src="/admin-lte-assets/js/pages/dashboard2.js"></script>
 <script src="/admin-lte-assets/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script type="text/javascript">
+<script type="text/javascript">
 
 $(function () {
     //Initialize Select2 Elements
@@ -353,6 +356,6 @@ $(function () {
           }
       @endif
     </script>
-
+@yield('js')
 </body>
 </html>

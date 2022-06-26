@@ -176,6 +176,25 @@ class InterService
         echo $response->getBody();
     }
 
+    public function getSaldo(){
+        $headers =  [
+            'Authorization' => 'Bearer ' . $this->checkOAuthLogin(),
+            "Content-Type" => "application/json"
+        ];
+
+        $response = $this->lnService->get(
+            $this->url . "banking/v2/saldo", 
+            $headers,
+            $this->certKey()
+        );
+
+        if($response->getStatusCode() == 200){
+            return $response->getBody();
+        }
+
+        return 0;
+    }
+
     public function logs($message){
         Log::build([
             'driver' => 'daily',
