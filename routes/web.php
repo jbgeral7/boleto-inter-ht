@@ -53,6 +53,7 @@ Route::group(['middleware' => ['web']], function(){
             Route::post('gerar', [BoletoController::class, 'store'])->name('store');
             Route::post('auto-gerar', [BoletoController::class, 'autoGenerate'])->name('auto-generate');
             Route::get('status', [BoletoController::class, 'status'])->name('status');
+            Route::get('cancelar/{id}', [BoletoController::class, 'cancel'])->name('cancel');
             Route::get('enviar-email/{id}', [BoletoController::class, 'sendEmail'])->name('send-email');
             Route::get('enviar-email/avulse/{id}', [BoletoController::class, 'sendAvulseEmail'])->name('send-avulse-email');
             Route::get('download-pdf/{id}', [BoletoController::class, 'downloadPdf'])->name('download');

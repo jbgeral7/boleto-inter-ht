@@ -156,7 +156,7 @@ class InterService
 
     }
 
-    private function cancel($number){
+    public function cancel($number){
         $oauth = $this->checkOAuthLogin();
 
         $data = ["motivoCancelamento" => "APEDIDODOCLIENTE"];
@@ -173,7 +173,23 @@ class InterService
             $this->certKey(), 
             false);
 
-        echo $response->getBody();
+            $prefixLog = "cancelar-boleto";
+
+        $this->logs("{$prefixLog} {$response->getStatusCode()} - {$response->getBody()}\n\n");
+
+         if($response->getStatusCode() == 204){
+            return response()->json([
+                'message' => "Boleto cancelado. Confira no app do inter se o mesmo foi cancelado",
+                'status' => 204
+                ],204
+            );
+        }
+
+        return response()->json([
+            'message' => "Ocorreu um problema ao cancelar o boleto, confira mais detalhes no log",
+            'status' => 500
+            ],500
+        );
     }
 
     public function getSaldo(){

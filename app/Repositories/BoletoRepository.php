@@ -46,6 +46,7 @@ class BoletoRepository extends AbstractRepository implements BoletoInterface
         $data['our_number'] = $decode->nossoNumero;
         $data['bar_code'] = $decode->codigoBarras;
         $data['digitable_line'] = $decode->linhaDigitavel;
+        $data['status'] = "EM ABERTO";
 
         $response = $this->abs::store($data);
         return response($response, 200);
@@ -62,8 +63,15 @@ class BoletoRepository extends AbstractRepository implements BoletoInterface
 
     public function cancel($id)
     {
-        dd('');
-        
+        $find = $this->abs::find($id);
+        $response = $this->interService->cancel($find->our_number);
+        $decode = json_decode($response->getContent());
+
+        if($decode->status == 204){
+            $this->model = Boleto::class;
+            $this->abs::update(["status" => "CANCELADO"], $id);
+        }
+        return $decode;
     }
 
     public function withPaginate($with, $customer_id){

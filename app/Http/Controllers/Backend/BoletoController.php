@@ -120,9 +120,16 @@ class BoletoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function cancel($id)
     {
-        //
+      $response = $this->boleto->cancel($id);
+        
+      $mesesage = $response->status == 204 ?  $response->message : $response->message;
+      $type = $response->status == 204 ?  "success" : "error";
+
+      return redirect()->back()
+      ->with(['message' => $mesesage, 'alert-type' => $type]);
+    
     }
 
     public function downloadPdf($boleto){

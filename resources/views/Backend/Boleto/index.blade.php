@@ -68,7 +68,7 @@
                              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg-{{$record->id}}">Detalhes</button>
                              <a class="btn btn-dark" href="{{route('backend.boleto.download', ['id' => $record->id])}}">Baixar PDF</a>
                              <a this.disabled=true class="btn btn-warning" href="{{route('backend.boleto.send-avulse-email', ['id' => $record->id])}}">Enviar por e-mail</a>
-                             <a class="btn btn-danger {{$record->status != "EM ABERTO" ? 'disabled' : ''}}" href="{{route('backend.boleto.status', ['id' => $record->id])}}" aria-disabled="{{$record->status != "EM ABERTO" ? 'true' : 'false'}}">Cancelar</a>
+                             <a class="btn btn-danger {{$record->status != "EM ABERTO" ? 'disabled' : ''}}" href="{{route('backend.boleto.cancel', ['id' => $record->id])}}" aria-disabled="{{$record->status != "EM ABERTO" ? 'true' : 'false'}}">Cancelar</a>
                           </div>
                         </div>
                         <div class="modal fade show" id="modal-lg-{{$record->id}}" style="display: none;" aria-modal="true" role="dialog">
