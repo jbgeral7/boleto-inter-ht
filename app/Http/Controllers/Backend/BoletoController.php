@@ -111,7 +111,10 @@ class BoletoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->boleto->update(["status" => $request->status], $id);
+
+        return redirect()->back()
+      ->with(['message' => 'Status do boleto ' . $id . ' atualizado com sucesso', 'alert-type' => 'success']);
     }
 
     /**

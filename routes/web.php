@@ -58,6 +58,7 @@ Route::group(['middleware' => ['web']], function(){
             Route::get('enviar-email/{id}', [BoletoController::class, 'sendEmail'])->name('send-email');
             Route::get('enviar-email/avulse/{id}', [BoletoController::class, 'sendAvulseEmail'])->name('send-avulse-email');
             Route::get('download-pdf/{id}', [BoletoController::class, 'downloadPdf'])->name('download');
+            Route::put('editar/{id}', [BoletoController::class, 'update'])->name('update');
         });
 
     });

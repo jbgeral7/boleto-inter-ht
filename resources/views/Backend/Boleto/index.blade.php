@@ -66,9 +66,10 @@
                                  @endif
                              </ul>
                              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg-{{$record->id}}">Detalhes</button>
+                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lg-edit-{{$record->id}}">Editar</button>
                                 @if($record->status == "EM ABERTO")
-                                    <a class="btn btn-dark" href="{{route('backend.boleto.download', ['id' => $record->id])}}">Baixar PDF</a>
-                                    <a class="btn btn-warning" href="{{route('backend.boleto.send-avulse-email', ['id' => $record->id])}}">Enviar por e-mail</a>
+                                    <a class="btn btn-dark" href="{{route('backend.boleto.download', ['id' => $record->id])}}">Baixar</a>
+                                    <a class="btn btn-warning" href="{{route('backend.boleto.send-avulse-email', ['id' => $record->id])}}">Enviar e-mail</a>
                                     <a class="btn btn-danger" href="{{route('backend.boleto.cancel', ['id' => $record->id])}}">Cancelar</a>
                                 @endif
                           </div>
@@ -102,6 +103,43 @@
                                       <li>Notificado por Telegram: {{$record->telegram_notify_send}}</li>
                                   </ul>
                                 <a class="btn btn-dark" href="{{route('backend.boleto.download', ['id' => $record->id])}}">Baixar PDF</a>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Fechar </button>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+
+                        {{-- Editar  --}}
+
+                        <div class="modal fade show" id="modal-lg-edit-{{$record->id}}" style="display: none;" aria-modal="true" role="dialog">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Editar boleto id: {{$record->id}}</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <ul class="list-unstyled">
+                                      <form action="{{route('backend.boleto.update', ['id' => $record->id])}}" method="post">
+                                        @csrf
+                                        @method('put')
+                                        
+                                            <select name="status" id="status" class="form-control" required>
+                                                <option value="">Selecione o status</option>
+                                                <option value="PAGO" {{$record->status == "PAGO" ? 'selected' : ''}}>PAGO</option>
+                                                <option value="EM ABERTO" {{$record->status == "EM ABERTO" ? 'selected' : ''}}>EM ABERTO</option>
+                                                <option value="CANCELADO" {{$record->status == "CANCELADO" ? 'selected' : ''}}>CANCELADO</option>
+                                                <option value="VENCIDO" {{$record->status == "VENCIDO" ? 'selected' : ''}}>VENCIDO</option>
+                                                <option value="EXPIRADO" {{$record->status == "EXPIRADO" ? 'selected' : ''}}>EXPIRADO</option>
+                                            </select>
+
+                                        <button type="submit" class="btn btn-success mt-4">Atualizar {{$record->id}}</button>
+                                      </form>
+                                  </ul>
                                 </div>
                                 <div class="modal-footer justify-content-between">
                                   <button type="button" class="btn btn-default" data-dismiss="modal">Fechar </button>
