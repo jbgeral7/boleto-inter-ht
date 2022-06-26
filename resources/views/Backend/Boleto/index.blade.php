@@ -1,5 +1,6 @@
 @extends('Backend.Layouts.panel')
-@if(!empty($records[0]))
+
+@if(!empty($customer_id))
     @section('title', 'Listando todos os boletos de: ' . $records[0]->customer->name)
 @else
     @section('title','Lista de boletos')
@@ -16,7 +17,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                @if(!empty($records[0]))
+                @if(!empty($customer_id))
                     <h3 class="card-title">Listando todos os boletos de: {{$records[0]->customer->name}}</h3>
                 @else
                     <h3 class="card-title">Lista de boletos</h3>
