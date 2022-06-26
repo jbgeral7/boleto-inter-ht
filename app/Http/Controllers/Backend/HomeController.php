@@ -43,6 +43,7 @@ class HomeController extends Controller
 
     protected function getSaldo(){
         $decode = $this->inter->getSaldo();
+        Cache::put('saldo-conta-inter', json_decode($decode), 86400);
         return json_decode($decode);
     }
 
