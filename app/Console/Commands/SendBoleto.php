@@ -20,7 +20,7 @@ class SendBoleto extends Command
      *
      * @var string
      */
-    protected $description = 'Envia o boleto por e-mail e WhatsApp';
+    protected $description = 'Envia o boleto por e-mail e chama a função de enviar pelo WhatsApp';
 
     /**
      * Create a new command instance.
@@ -78,8 +78,12 @@ class SendBoleto extends Command
             $this->boleto->successSendBoleto($success_ids);
         }
 
-        // $this->logs("{$prefixLog} Envios por e-mail finalizado. Chamando envios pelo WhatsApp");
-        // $this->call("ln:send-whatsapp", ["boletos_id" => $boletos_id]);
+        $this->logs("{$prefixLog} Envios por e-mail finalizado. Chamando envios pelo WhatsApp \n\n");
+        $key = env("WHATSAPP_SECRET_KEY");
+
+        if(!empty($key)){
+            $this->call("ln:send-whatsapp", ["boletos_id" => $boletos_id]);
+        }
     }
 
     public function logs($message){

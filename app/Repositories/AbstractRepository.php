@@ -86,6 +86,12 @@ abstract class AbstractRepository
         return Cache::tags([$this->tableCache])->get($queryPut);
     }
 
+    public function delete($id){
+        $find = $this->model::where('id', $id)->first();
+        $find->delete($find);
+        return;
+    }
+
     public function resolveModel(){
         // Identifica qual o Model e atribui na variável
         return app($this->model);

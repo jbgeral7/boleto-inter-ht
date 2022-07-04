@@ -5,9 +5,11 @@ namespace App\Providers;
 use App\Models\Boleto;
 use App\Models\Service;
 use App\Models\Customer;
+use App\Models\WhatsApp;
 use App\Observers\BoletoObServe;
 use App\Observers\ServiceObserver;
 use App\Observers\CustomerObserver;
+use App\Observers\WhatsAppObserver;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -36,5 +38,6 @@ class EventServiceProvider extends ServiceProvider
        Customer::observe(CustomerObserver::class);
        Service::observe(ServiceObserver::class);
        Boleto::observe(BoletoObServe::class);
+       WhatsApp::observe(WhatsAppObserver::class);
     }
 }

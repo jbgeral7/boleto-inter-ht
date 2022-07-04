@@ -195,24 +195,6 @@ class BoletoRepository extends AbstractRepository implements BoletoInterface
         return response("boleto enviado com sucesso", 200);
     }
 
-    public function sendWhatsApp($boleto_id){
-        $find = Boleto::where('id', $boleto_id)->with('customer')->firstOrFail();
-        
-        $permission = $this->verifyPermissionSendBoleto($find, 'whatsapp_notify');
-
-        if(!$permission){
-            return response("O cliente está configurado para não receber boletos pelo WhatsApp, verifique o cadastro do cliente", 401);
-        }
-
-        $exists = $this->findPath($permission);
-
-        if(!$exists){
-            return response("Boleto não enviado, o arquivo não existe", 404);
-        }
-
-
-    }
-
     public function verifyPermissionSendBoleto($find, $type){
        return $find->customer->$type == 1 ? $find : false;
     }

@@ -27,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Interfaces\BoletoInterface',
             'App\Repositories\BoletoRepository'
           );
+          $this->app->bind(
+            'App\Interfaces\WhatsAppInterface',
+            'App\Repositories\WhatsAppRepository'
+          );
     }
 
     /**

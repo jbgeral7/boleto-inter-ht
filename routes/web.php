@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\CustomerController;
-use App\Http\Controllers\Backend\ServiceController;
-use App\Http\Controllers\Backend\BoletoController;
 use App\Http\Controllers\Backend\HomeController;
+use App\Http\Controllers\Backend\BoletoController;
+use App\Http\Controllers\Backend\ServiceController;
+use App\Http\Controllers\Backend\CustomerController;
+use App\Http\Controllers\Backend\WhatsAppController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,15 @@ Route::group(['middleware' => ['web']], function(){
             Route::get('enviar-email/avulse/{id}', [BoletoController::class, 'sendAvulseEmail'])->name('send-avulse-email');
             Route::get('download-pdf/{id}', [BoletoController::class, 'downloadPdf'])->name('download');
             Route::put('editar/{id}', [BoletoController::class, 'update'])->name('update');
+        });
+
+        Route::group(['prefix' => 'whatsapp', 'as' => 'whatsapp.'], function(){
+            // Start WhatsApp
+            Route::get('/', [WhatsAppController::class, 'index'])->name('index');
+            Route::get('close-session', [WhatsAppController::class, 'closeSession'])->name('close.session');
+            Route::get('qrcode-login-update', [WhatsAppController::class, 'qrcodeUpdate']);
+            Route::get('check-status', [WhatsAppController::class, 'getStatusConnection'])->name('whats.check.status');
+            // End WhatsApp
         });
 
     });
