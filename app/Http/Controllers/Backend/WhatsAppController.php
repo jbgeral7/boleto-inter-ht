@@ -16,7 +16,7 @@ class WhatsAppController extends Controller
     public function index()
     {
         $response = $this->whatsapp->login();
-        return view('Backend.Whatsapp.index', compact('response'));
+        return view('Backend.WhatsApp.index', compact('response'));
         
     }
 
