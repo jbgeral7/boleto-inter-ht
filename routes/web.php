@@ -68,6 +68,7 @@ Route::group(['middleware' => ['web']], function(){
             Route::get('close-session', [WhatsAppController::class, 'closeSession'])->name('close.session');
             Route::get('qrcode-login-update', [WhatsAppController::class, 'qrcodeUpdate']);
             Route::get('check-status', [WhatsAppController::class, 'getStatusConnection'])->name('whats.check.status');
+            Route::get('send/avulse/whatsapp/{id}', [WhatsAppController::class, 'sendAvulse'])->name('send.avulse');
             // End WhatsApp
         });
 

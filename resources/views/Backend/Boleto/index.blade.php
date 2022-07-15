@@ -66,12 +66,12 @@
                                     <li>Data Cancelamento: {{$record->cancellation_date}}</li>
                                  @endif
                              </ul>
-                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg-{{$record->id}}">Detalhes</button>
+                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg-{{$record->id}}">Info</button>
                              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lg-edit-{{$record->id}}">Editar</button>
-                                @if($record->status == "EM ABERTO")
-                                    <a class="btn btn-dark" href="{{route('backend.boleto.download', ['id' => $record->id])}}">Baixar</a>
-                                    <a class="btn btn-warning" href="{{route('backend.boleto.send-avulse-email', ['id' => $record->id])}}">Enviar e-mail</a>
-                                    <a class="btn btn-danger" href="{{route('backend.boleto.cancel', ['id' => $record->id])}}">Cancelar</a>
+                                @if($record->status == "EM ABERTO" && date('Y-m-d') <= $record->due_date)
+                                  <a onclick="return confirm('Tem certeza que deseja enviar uma cobrança avulsa via e-mail?')" class="btn btn-warning" href="{{route('backend.boleto.send-avulse-email', ['id' => $record->id])}}">Enviar e-mail</a>
+                                  <a onclick="return confirm('Tem certeza que deseja enviar uma cobrança avulsa pelo WhatsApp?')" class="btn btn-dark" href="{{route('backend.whatsapp.send.avulse', ['id' => $record->id])}}">Enviar WhatsApp</a>
+                                  <a onclick="return confirm('Tem certeza que deseja cancelar o boleto?')" class="btn btn-danger" href="{{route('backend.boleto.cancel', ['id' => $record->id])}}">Cancelar</a>
                                 @endif
                           </div>
                         </div>
@@ -137,6 +137,11 @@
                                                 <option value="VENCIDO" {{$record->status == "VENCIDO" ? 'selected' : ''}}>VENCIDO</option>
                                                 <option value="EXPIRADO" {{$record->status == "EXPIRADO" ? 'selected' : ''}}>EXPIRADO</option>
                                             </select>
+                                            
+                                            <div class="form-group mt-4">
+                                              <label for="payment_date">Data de pagamento</small></label>
+                                              <input type="date" class="form-control" name="payment_date" id="payment_date" value="{{old('payment_date')}}" placeholder="Data de vencimento">
+                                          </div>
 
                                         <button type="submit" class="btn btn-success mt-4">Atualizar {{$record->id}}</button>
                                       </form>
