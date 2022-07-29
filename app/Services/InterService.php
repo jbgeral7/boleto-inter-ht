@@ -75,12 +75,11 @@ class InterService
         $oauth = $this->checkOAuthLogin();
 
         // return $this->cancel('00812272294');
-
         $data = [
             "valorAbatimento" => 0,
                 "pagador" => [
                     "cpfCnpj" => $customer->cpf_cnpj,
-                    "tipoPessoa" => $customer->type_of_person,
+                    "tipoPessoa" => strtoupper($customer->type_of_person),
                     "nome" => $customer->name,
                     "endereco" => $customer->address,
                     "numero" => $customer->address_number,
