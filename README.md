@@ -1,64 +1,145 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Gerador de boleto Inter
 
-## About Laravel
+Sistema para geração e envio de boleto automaticamente através do banco inter para conta PJ (Não funciona para MEI)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Cadastro de clientes
+- Cadastro de Serviços
+- Atrelar serviços a clientes
+- Geração automática de boleto
+- Geração de boleto avulso
+- Envio automático de boleto via E-mail
+- Envio automático de boleto via WhatsApp
+- Envio de boleto avulso via E-mail
+- Envio de boleto avulso via WhatsApp
+- Consulta de saldo na conta do Inter
+## Requerimentos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+O projeto não irá funcionar sem um banco de dados em memória, recomendo o Redis
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP Version >= 7.3
+- BCMath PHP Extension
+- Ctype PHP Extension
+- Fileinfo PHP extension
+- JSON PHP Extension
+- Mbstring PHP Extension
+- OpenSSL PHP Extension
+- PDO PHP Extension
+- Tokenizer PHP Extension
+- XML PHP Extension
+- Redis ou Memcached (Recomendo o Redis)
 
-## Learning Laravel
+## Instalação
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Clone o projeto
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+  git clone https://github.com/leonardop21/boleto-inter
+```
 
-## Laravel Sponsors
+Execute o composer
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```
+composer install
+```
 
-### Premium Partners
+Renomeie o .env.example para .env e preencha as variáveis. Exemplo de preenchimento das variáveis do projeto
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```
+DARK_MODE= HABILITA O TEMA ESCURO - TRUE or False"
+PAGINATION_LIMIT= Limite de paginação no sistema ex: 10
+TIME_CACHE_IN_SECONDS= Cache do sistema em segundos, ex: 604800
 
-## Contributing
+EMAIL_DUVIDA= E-mail que o cliente poderá responder
+NOTIFY_SEND_BOLETO= Este e-mail receberá uma notificação após o envio ou falha nos envios
+NAME_SIGNATURE_MAIL= Nome do email
+SITE_URL_REDIRECT_EMAIL= Site que aparecerá no corpo do e-mail
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#Inter
+INTER_PATH_CRT=caminho_arquivo.crt
+INTER_PATH_KEY=caminho_arquvivo.key
+INTER_BASE_URL="https://cdpj.partners.bancointer.com.br/"
+INTER_CLIENT_ID="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+INTER_CLIENT_SECRET="xxxxxxxxxxxxxxxxxxxxx"
+INTER_CLIENT_SCOPE="extrato.read boleto-cobranca.read boleto-cobranca.write"
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#PIX
+CHAVE_PIX=
 
-## Security Vulnerabilities
+# Necessário preencher para envio de mensagens via WhastApp
+WHATSAPP_BASE_URL= Url do projeto no WhatsAppp
+WHATSAPP_SECRET_KEY= Chave Secreta
+WHATSAPP_SESSION="Nome da sessão gerada no servidor do WhastApp"
+NOTIFY_SEND_BOLETO_WHATSAPP="Número que irá receber uma mensgem, quando o envio pelo whats for finalziado"
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Rode as migrations
 
+```
+php artisan migrate
+```
+
+Crie seu usuário através do Tinker
+
+Faça login no sistema
+- Cadastre um serviço
+- Cadastre um cliente
+- Atrele o serviço ao cliente
+
+## Gerar boleto automaticamente
+
+Para gerar o boleto automaticamente, rode o comando
+
+```
+php artisan ln:auto_generate_boleto
+```
+
+O sistema irá procurar clientes com o status "ativo" e com serviços atrelados, irá gerar o boleto, enviar por e-mail e se o WhatsApp estiver configurado, também será enviado pelo WhatsApp.
+
+### Logs
+Você pode conferir os logs da geração do boleto e do envio na pasta /storage/logs/gerar-boleto/boleto-ano-mes-dia.log
+
+
+## Screenshots
+
+
+### Página inicial
+![Página inicial](https://i.imgur.com/RsC5KcU.png)
+
+
+
+### Cadastro de serviços
+![Cadastro de serviços](https://i.imgur.com/SaXMvOf.png)
+
+
+### Cadastro de Cliente
+![Cadastro de serviços](https://i.imgur.com/7clMNgp.png)
+
+### Geração de boleto avulso
+
+![Boleto Avulso](https://i.imgur.com/TUyDNKh.png)
+
+### Login no WhatsApp
+![Login no WhatsApp](https://i.imgur.com/XWadznx.png)
+
+### Envio via E-mail
+![Envio de boleto por e-mail](https://i.imgur.com/YGAAf3z.png)
+
+### Envio via WhatsApp 
+![Envio via WhatsApp](https://i.imgur.com/uAS1xCl.png)
+
+### Envio Via WhatsApp Anexo
+![Envio anexo](https://i.imgur.com/oZzvVtl.png)
+## Créditos
+
+- [Template E-mail - ckissi](https://github.com/ckissi/responsive-html-email-templates)
+- [wppconnect-team](https://github.com/wppconnect-team)
+- [ColorlibHQ](https://github.com/ColorlibHQ/AdminLTE)
+
+## Este projeto é útil para você? Aceito um café ☕
+
+Este projeto te auxiliou de alguma forma? Então, que tal me pagar um café? ☕☕
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[Mozilla Public License 2.0](https://choosealicense.com/licenses/mpl-2.0/)
