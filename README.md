@@ -133,16 +133,16 @@ Você pode conferir os logs da geração do boleto e do envio na pasta /storage/
 ![Envio anexo](https://i.imgur.com/oZzvVtl.png)
 ## Créditos
 
-- [Template E-mail - ckissi](https://github.com/ckissi/responsive-html-email-templates){:target="_blank"}
-- [wppconnect-team](https://github.com/wppconnect-team){:target="_blank"}
-- [ColorlibHQ](https://github.com/ColorlibHQ/AdminLTE){:target="_blank"}
+- [Template E-mail - ckissi](https://github.com/ckissi/responsive-html-email-templates)
+- [wppconnect-team](https://github.com/wppconnect-team)
+- [ColorlibHQ](https://github.com/ColorlibHQ/AdminLTE)
 
 ## Este projeto é útil para você? Aceito um café ☕
 
 Este projeto te auxiliou de alguma forma? Então, que tal me pagar um café? ☕☕
 ## License
 
-[Mozilla Public License 2.0](https://choosealicense.com/licenses/mpl-2.0/){:target="_blank"}
+[Mozilla Public License 2.0](https://choosealicense.com/licenses/mpl-2.0/)
 
 
 
