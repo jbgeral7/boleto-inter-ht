@@ -25,7 +25,7 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $records = $this->customer->paginate();
+        $records = $this->customer->customerWithPaginate('services');
         return view('Backend.Customer.index', compact('records'));
     }
 

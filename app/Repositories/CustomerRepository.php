@@ -13,11 +13,22 @@ class CustomerRepository extends AbstractRepository implements CustomerInterface
     protected $abs = AbstractRepository::class;
     
     public function customerActiveWith($with){
-        $tableCache = $this->model;
+            $tableCache = $this->model;
             $records = Cache::remember($tableCache . '_get_active_with', $this->time_cache, function() use($with) {
                 return $this->model::where('status', '1')->with($with)->has($with)->orderBy('id', 'desc')->get();
             });
         return $records;
+    }
+
+    public function customerWithPaginate($with){
+        $page = request()->get('page', 1);
+        $tableCache = $this->model->getTable();
+        
+        if(!Cache::tags($tableCache)->has('_get_with_page_' . $page)){
+            $records = $this->model::with($with)->orderBy('id', 'desc')->paginate(env('PAGINATION_LIMIT'));
+            Cache::tags([$tableCache])->put('_get_with_page_' . $page, $records, env('TIME_CACHE_IN_SECONDS'));
+        }
+        return Cache::tags([$tableCache])->get('_get_with_page_' . $page);
     }
     
     public function store($data)
