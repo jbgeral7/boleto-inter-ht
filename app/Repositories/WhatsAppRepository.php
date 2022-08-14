@@ -125,7 +125,7 @@ class WhatsAppRepository extends AbstractRepository implements WhatsAppInterface
 
         $value = convertBRL($find->price);
         $url = $this->url . $this->session . '/send-message';
-        $headers = ['Authorization' => 'Bearer ' . '$2b$10$Mr_FVJ06JH7Fd7HkV_6TlOrPI8AbXI3mlmCXvpaJ4UkqCMxSN.5yC'];
+        $headers = ['Authorization' => 'Bearer ' . env('WHATSAPP_TOKEN_BEARER')];
         $due_date = date("d/m/Y", strtotime($find->due_date));
         $string = "*Seu boleto chegou!* \n\n
         *Olá, {$find->customer->name} - {$find->customer->fantasy_name}*
@@ -159,7 +159,7 @@ class WhatsAppRepository extends AbstractRepository implements WhatsAppInterface
         $this->logs("{$this->prefixLog} Iniciando o envio de boleto");
 
         $url = $this->url . $this->session . '/send-file-base64';
-        $headers = ['Authorization' => 'Bearer ' . '$2b$10$Mr_FVJ06JH7Fd7HkV_6TlOrPI8AbXI3mlmCXvpaJ4UkqCMxSN.5yC'];
+        $headers = ['Authorization' => 'Bearer ' . env('WHATSAPP_TOKEN_BEARER')];
 
         $archive = base_path() . "/storage/app/" . $boleto->path . $boleto->boleto;
 
@@ -211,7 +211,7 @@ class WhatsAppRepository extends AbstractRepository implements WhatsAppInterface
             $content = $title . "\n\n" . $sendName;
 
             $url = $this->url . $this->session . '/send-message';
-            $headers = ['Authorization' => 'Bearer ' . '$2b$10$Mr_FVJ06JH7Fd7HkV_6TlOrPI8AbXI3mlmCXvpaJ4UkqCMxSN.5yC'];
+            $headers = ['Authorization' => 'Bearer ' . env('WHATSAPP_TOKEN_BEARER')];
             
             $data = [
                 "phone" => env("NOTIFY_SEND_BOLETO_WHATSAPP"),
