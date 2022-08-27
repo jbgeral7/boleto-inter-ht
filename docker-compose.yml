@@ -1,0 +1,32 @@
+version: '3.0'
+  
+services:
+  # boletointer-app:
+  #   build:
+  #     context: ./app
+  #   container_name: boletointer-app
+  #   ports:
+  #     - 8000:8000
+  #   restart: always
+  #   volumes:
+  #     - ./app:/var/www/html
+  boletointer-database:
+    container_name: boletointer-database
+    image: mysql:latest
+    ports:
+      - 3307:3306
+    command: mysqld --sql_mode=""
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./database/init:/docker-entrypoint-initdb.d
+      - boletointer-data:/var/lib/mysql
+  # boletointer-websocket:
+  #   build: 
+  #     context: ./websocket
+  #   container_name: boletointer-websocket
+  #   ports:
+  #     - 3333:3333
+  #   restart: always
+volumes:
+  boletointer-data:
