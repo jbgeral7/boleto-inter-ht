@@ -1,0 +1,3 @@
+[submodule "whatsapp"]
+	path = whatsapp
+	url = ./whatsapp/
