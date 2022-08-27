@@ -26,13 +26,12 @@ Route::get('/', function () {
 
 
 
-Route::group(['middleware' => ['web']], function(){
-    Route::group(['prefix' => 'painel', 'namespace' => 'App\Http\Controllers\Backend', 'middleware' => 'auth', 'as' => 'backend.'], function()
-	{
+Route::group(['middleware' => ['web']], function () {
+    Route::group(['prefix' => 'painel', 'namespace' => 'App\Http\Controllers\Backend', 'middleware' => 'auth', 'as' => 'backend.'], function () {
         Route::get('/', [HomeController::class, 'index'])->name('index');
         Route::get('/get-saldo',  [HomeController::class, 'getSaldo'])->name('get-saldo');
         Route::get('/limpar-cache', [HomeController::class, 'cacheClear'])->name('cache-clear');
-        Route::group(['prefix' => 'cliente', 'as' => 'customer.'], function(){
+        Route::group(['prefix' => 'cliente', 'as' => 'customer.'], function () {
             Route::get('listar', [CustomerController::class, 'index'])->name('index');
             Route::get('adicionar', [CustomerController::class, 'create'])->name('create');
             Route::post('adicionar', [CustomerController::class, 'store'])->name('store');
@@ -41,15 +40,15 @@ Route::group(['middleware' => ['web']], function(){
             Route::get('boletos/listar/{id}', [CustomerController::class, 'getBoletos'])->name('boletos');
         });
 
-        Route::group(['prefix' => 'servico', 'as' => 'service.'], function(){
+        Route::group(['prefix' => 'servico', 'as' => 'service.'], function () {
             Route::get('listar', [ServiceController::class, 'index'])->name('index');
             Route::get('adicionar', [ServiceController::class, 'create'])->name('create');
             Route::post('adicionar', [ServiceController::class, 'store'])->name('store');
             Route::get('editar/{id}', [ServiceController::class, 'edit'])->name('edit');
             Route::put('editar/{id}', [ServiceController::class, 'update'])->name('update');
         });
-        
-        Route::group(['prefix' => 'boleto', 'as' => 'boleto.'], function(){
+
+        Route::group(['prefix' => 'boleto', 'as' => 'boleto.'], function () {
             Route::get('listar/{cliente?}/{customer_id?}', [BoletoController::class, 'index'])->name('index');
             Route::get('gerar', [BoletoController::class, 'create'])->name('create');
             Route::post('gerar', [BoletoController::class, 'store'])->name('store');
@@ -62,7 +61,7 @@ Route::group(['middleware' => ['web']], function(){
             Route::put('editar/{id}', [BoletoController::class, 'update'])->name('update');
         });
 
-        Route::group(['prefix' => 'whatsapp', 'as' => 'whatsapp.'], function(){
+        Route::group(['prefix' => 'whatsapp', 'as' => 'whatsapp.'], function () {
             // Start WhatsApp
             Route::get('/', [WhatsAppController::class, 'index'])->name('index');
             Route::get('close-session', [WhatsAppController::class, 'closeSession'])->name('close.session');
@@ -71,11 +70,10 @@ Route::group(['middleware' => ['web']], function(){
             Route::get('send/avulse/whatsapp/{id}', [WhatsAppController::class, 'sendAvulse'])->name('send.avulse');
             // End WhatsApp
         });
-
     });
 });
 
 
-Auth::routes(['register' => false, 'reset' => false]);
+Auth::routes(['register' => true, 'reset' => false]);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
